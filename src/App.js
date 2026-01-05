@@ -6,20 +6,23 @@ function App() {
   const [encrypted, setEncrypted] = useState("");
   const [decrypted, setDecrypted] = useState("");
 
-  const encryptData = async () => {
-    const res = await axios.post("http://localhost:5000/encrypt", {
-      text,
-    });
-    setEncrypted(res.data.encryptedText);
-    setDecrypted("");
-  };
+const API_URL = import.meta.env.VITE_API_URL;
 
-  const decryptData = async () => {
-    const res = await axios.post("http://localhost:5000/decrypt", {
-      encryptedText: encrypted,
-    });
-    setDecrypted(res.data.originalText);
-  };
+const encryptData = async () => {
+  const res = await axios.post(`${API_URL}/encrypt`, {
+    text,
+  });
+  setEncrypted(res.data.encryptedText);
+  setDecrypted("");
+};
+
+const decryptData = async () => {
+  const res = await axios.post(`${API_URL}/decrypt`, {
+    encryptedText: encrypted,
+  });
+  setDecrypted(res.data.originalText);
+};
+
 
   return (
     <div className="container mt-5">
